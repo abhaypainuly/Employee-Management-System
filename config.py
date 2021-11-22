@@ -27,14 +27,14 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     SQLALCHEMY_ECHO = True
-
+    SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_DEV")
 
 class ProductionConfig(Config):
     """
         Configurations for Production!
     """
     DEBUG = False
-
+    SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_PROD")
 
 # Mapping enviroment to class
 app_config = {

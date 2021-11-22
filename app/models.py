@@ -16,8 +16,8 @@ class Employee(UserMixin, db.Model):
     last_name = db.Column(db.String(60), index=True)
     password_encrypt = db.Column(db.String(128))
     department_id = db.Column(db.Integer, db.ForeignKey("department.id"))
-    role_id = db.Column(db.Interger, db.Forerignkey("roles.id"))
-    is_admin = db.Column(db.boolean, default=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
+    is_admin = db.Column(db.Boolean, default=False)
 
     @property
     def password(self):
@@ -42,7 +42,7 @@ class Employee(UserMixin, db.Model):
     def __repr__(self):
         return "Employee: {}".format(self.username)
 
-@login_manger.user_loader
+@login_manager.user_loader
 def load_user(user_id):
     return Employee.query.get(id = int(user_id))
 
@@ -55,7 +55,7 @@ class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
-    employess = db.relationshp("Employee", backref="department", lazy="dynamic")
+    employees = db.relationship("Employee", backref="department", lazy="dynamic")
 
     def __repr__(self):
         return "Department: {}".format(self.name)
@@ -69,7 +69,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
-    employess = db.relationshp("Employee", backref="role", lazy="dynamic")
+    employees = db.relationship("Employee", backref="role", lazy="dynamic")
 
     def __repr__(self):
         return "Role: {}".format(self.name)
