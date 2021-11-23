@@ -31,7 +31,7 @@ class Employee(UserMixin, db.Model):
         """
         Sets password in encrypted form!
         """
-        self.password_encrypt = generate_passeord_hash(password)
+        self.password_encrypt = generate_password_hash(password)
 
     def verify_password(self, password):
         """
