@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, flash
 from flask_login import login_required
 
 from . import home
@@ -16,4 +16,4 @@ def dashboard():
     """
     Renders the dashboard template!
     """
-    return render_template("home/dabhboard.html", title="Dashboard")
+    return render_template("home/dashboard.html", title="Dashboard")

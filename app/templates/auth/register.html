@@ -1,12 +1,14 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 {% block title %}title{% endblock %}
 
 {% block body %}
-<div class="form-wrapper">
+
+  <div class="form-wrapper">
     <h2 class="title">Register Employee!</h2>
 
     <form method="POST" action="{{ url_for('auth.register') }}">
-
+      {{ form.csrf_token }}
+      
       <fieldset class="form-field">
         {{ form.email.label }}
         {{ form.email }}

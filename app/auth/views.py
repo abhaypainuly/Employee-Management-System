@@ -4,7 +4,7 @@ from flask_login import login_required, login_user, logout_user
 from . import auth
 from .. import db
 from ..models import Employee
-from forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -12,8 +12,9 @@ def login():
     """
     Login users from /login page!
     """
-    form = LoginForm()
-    if form.validate_on_submit():        
+    form = LoginForm() 
+    if form.validate_on_submit():
+              
         # Checking if user is registered or not
         employee =  Employee.query.filter_by(email=form.email.data).first()
         if employee is not None:
@@ -52,14 +53,15 @@ def register():
     """
     form = RegisterForm()
     if form.validate_on_submit():
+        flash("validate_on_submit!")
         
         # Checking if username already exist or not
         employee = Employee.query.filter_by(username=form.username.data).first()
-        if employee is not None:
+        if employee is None:
             
             # Checking if email already registered or not
             employee = Employee.query.filter_by(email=form.email.data).first()
-            if employee is not None:
+            if employee is None:
                 # Creating the Employee class object
                 employee = Employee(
                     email = form.email.data,
@@ -72,6 +74,8 @@ def register():
                 # Adding the user to database
                 db.session.add(employee)
                 db.session.commit()
+
+                return redirect(url_for("auth.login"))
             else:
                 flash("Email already Registered!")
         else:

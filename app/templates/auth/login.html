@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 {% block title %}title{% endblock %}
 
 {% block body %}
@@ -7,7 +7,7 @@
     <h2 class="title">Login</h2>
 
     <form method="POST" action="{{ url_for('auth.login') }}">
-
+      {{ form.csrf_token }}
       <fieldset class="form-field">
         {{ form.email.label }}
         {{ form.email }}
@@ -23,7 +23,7 @@
       <fieldset class="form-field">
         {{ form.password.label }}
         {{ form.password }}
-        {% if form.body.errors %}
+        {% if form.password.errors %}
           <ul class="errors">
             {% for error in form.password.errors %}
               <li>{{ error }}</li>
