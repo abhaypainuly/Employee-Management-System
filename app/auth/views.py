@@ -18,7 +18,7 @@ def login():
         employee =  Employee.query.filter_by(email=form.email.data).first()
         if employee is not None:
             if employee.verify_password(form.password.data): 
-                # log user In
+                # Log user In
                 login_user(employee)
 
                 # Redirecting to dashboard
@@ -75,6 +75,7 @@ def register():
             else:
                 flash("Email already Registered!")
         else:
-            flash("Username already exist!") 
-    # rendering register template
+            flash("Username already exist!")
+
+    # Rendering register template
     return render_template("auth/register.html", form=form, title="Register")
