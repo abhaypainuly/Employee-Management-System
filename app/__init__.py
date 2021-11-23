@@ -22,16 +22,26 @@ def create_app():
 
     migrate.init_app(app, db)
 
-    @app.route('/')
-    def hello_world():
-        return 'Hello, World!'
+    #@app.route('/')
+    #def hello_world():
+    #    return 'Hello, World!'
     
-    @app.route('/m')
-    def migrations():
-        from flask_migrate import migrate as migrates, init
-        init(directory='migrations', multidb=False)
-        migrates(directory='migrations', message=None, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)
-        return 'Done!'
+    #@app.route('/m')
+    #def migrations():
+    #    from flask_migrate import migrate as migrates, init
+    #    init(directory='migrations', multidb=False)
+    #    migrates(directory='migrations', message=None, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)
+    #    return 'Done!'
+
     from app import models
-    
+
+    from .admin import admin as admin_blueprint
+    app.register_blueprint(admin_blueprint, url_prefix = '/admin')
+
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
+
     return app
