@@ -48,7 +48,9 @@ def department_add():
             return redirect(url_for("admin.department_list"))
 
         except:
-            flash("Department was not added as it already exists!")        
+            # Issuing rollback
+            db.session.rollback()
+            flash("Department Already Exists!")        
 
     return render_template("admin/departments/department.html", action="Add", add_department=add_department, form=form, title="Add Department")
 
@@ -77,7 +79,9 @@ def department_edit(id):
             return redirect(url_for("admin.department_list"))
 
         except:
-            flash("Failed to edit Department as it Already Exists!")
+            # Issuing rollback
+            db.session.rollback()
+            flash("Editting Department Failed!")
 
     form.name.data = department.name
     form.description.data = department.description
