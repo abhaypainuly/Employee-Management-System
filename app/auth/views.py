@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from . import auth
 from .. import db
@@ -23,13 +23,15 @@ def login():
                 login_user(employee)
 
                 # Redirecting to dashboard
+                if current_user.is_admin:
+                    return redirect(url_for("home.admin_dashboard"))
                 return redirect(url_for("home.dashboard"))
+
             else:
                 flash("Incorrect Password!")
         else:
             flash("Invalid Email!")
     
-    # Loading login tempalate
     return render_template("auth/login.html", form=form, title="Login")
 
 
