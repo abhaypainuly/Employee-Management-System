@@ -21,10 +21,6 @@ def create_app():
     login_manager.login_view = "auth.login"
 
     migrate.init_app(app, db)
-
-    #@app.route('/')
-    #def hello_world():
-    #    return 'Hello, World!'
     
     #@app.route('/m')
     #def migrations():
