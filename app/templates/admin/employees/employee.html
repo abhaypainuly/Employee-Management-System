@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}title{% endblock %}
+
+{% block body %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            <h1> Assign Departments and Roles </h1>
+            <br/>
+            <p>
+                Select a department and role to assign to
+                <span style="color: #aec251;">
+                    {{ employee.first_name }} {{ employee.last_name }}
+                </span>
+            </p>
+            <br/>
+
+            <form method="POST" action="{{ url_for('admin.employee_assign', id = employee.id) }}">
+            
+              {{ form.csrf_token }}
+
+              <fieldset class="form-field">
+                {{ form.department.label }}
+                {{ form.department }}
+                {% if form.department.errors %}
+                  <ul class="errors">
+                    {% for error in form.department.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </fieldset>
+        
+              <fieldset class="form-field">
+                {{ form.role.label }}
+                {{ form.role }}
+                {% if form.role.errors %}
+                  <ul class="errors">
+                    {% for error in form.role.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </fieldset>
+        
+              {{ form.submit }}
+        
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
