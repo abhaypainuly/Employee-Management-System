@@ -27,6 +27,7 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     SQLALCHEMY_ECHO = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_DEV")
 
 class ProductionConfig(Config):
@@ -34,12 +35,24 @@ class ProductionConfig(Config):
         Configurations for Production!
     """
     DEBUG = False
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_PROD")
+
+class TestingConfig(Config):
+    """
+        Configurations for Testing!
+    """
+    TESTING = True
+    DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_TEST")
 
 # Mapping enviroment to class
 app_config = {
     "development": DevelopmentConfig,
-    "production": ProductionConfig
+    "production": ProductionConfig,
+    "testing": TestingConfig
 }
 
 # Selecting configuration based on environment specfied in .env file

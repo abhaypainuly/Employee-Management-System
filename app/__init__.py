@@ -22,8 +22,8 @@ def create_app():
 
     migrate.init_app(app, db)
     
-    #@app.route('/m')
-    #def migrations():
+    # @app.route('/m')
+    # def migrations():
     #    from flask_migrate import migrate as migrates, init
     #    init(directory='migrations', multidb=False)
     #    migrates(directory='migrations', message=None, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)
@@ -39,5 +39,8 @@ def create_app():
 
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
+
+    from .error import error as error_blueprint
+    app.register_blueprint(error_blueprint, url_prefix="/error")
 
     return app
